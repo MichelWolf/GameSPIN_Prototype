@@ -27,9 +27,16 @@ public class Headbobber: MonoBehaviour
 	Vector3 bobs;// = transform.localPosition;
 
 	Character player;
-
+	
+	//Control Settings
+	[Header("Controller")]
+	public bool mouse = true;
+	private InputManagerIF inputManager = new InputManagerMouse();
 	void Start()
 	{
+		if(!mouse){
+			inputManager = new InputManagerController();
+		}
 		player = FindObjectOfType<Character> ();
 		bobs = transform.localPosition;
 	}
@@ -43,7 +50,7 @@ public class Headbobber: MonoBehaviour
 			if (player.isGrounded) {
 				//float horizontal = Input.GetAxis ("Horizontal");
 				//float vertical = Input.GetAxis ("Vertical");
-				Vector3 input = InputManager.MainJoystick ();
+				Vector3 input = inputManager.MainJoystick ();
 
 
 

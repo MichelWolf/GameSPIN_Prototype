@@ -6,6 +6,7 @@ public static class InputManager
 {
 	public static bool rightTriggerPressed = false;
 	public static bool leftTriggerPressed = false;
+	
 	//Axis
 	public static float MainHorizontal()
 	{

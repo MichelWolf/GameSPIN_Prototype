@@ -61,11 +61,34 @@ public class Character : MonoBehaviour
     public Material normalEnemy;
     public Material lockedEnemy;
 
+
 	//PostProcessingProfile ppp;
 	//VignetteModel.Settings pppSettings;
 
+	//Control Settings
+	[Header("Controller")]
+	public bool mouse;	
+	public Camera camera;
+	public Color playercolor;
+	
+	private InputManagerIF inputManager;
+	private int hitStatus;
+	private int hitBy2ndPlayer;
+	private Color playercolor2nd;
+
 	void Start()
 	{
+		if(!mouse){
+			inputManager = new InputManagerController();
+			hitBy2ndPlayer = 1;
+			hitStatus = 2;
+			playercolor2nd = Color.red;
+		}else{
+			inputManager = new InputManagerMouse();
+			hitBy2ndPlayer = 2;
+			hitStatus = 1;
+			playercolor2nd = Color.green;
+		}
 		Cursor.lockState = CursorLockMode.Locked;
 		charContr = GetComponent<CharacterController>();
 		currentMana = maxMana;
@@ -96,7 +119,7 @@ public class Character : MonoBehaviour
 		{
 			verticalVelocity = -gravity * Time.deltaTime;
 		}
-		if (InputManager.JumpButton()  && isGrounded)
+		if (inputManager.JumpButton() && isGrounded)
 		{
 			verticalVelocity = jumpForce;
 
@@ -117,21 +140,47 @@ public class Character : MonoBehaviour
 
 
         RaycastHit hit;
-        Vector3 rayOrigin = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        Vector3 rayOrigin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
         //Raycast in Richtung der Camera, was getroffen wird
-        if (Physics.Raycast(rayOrigin, Camera.main.transform.forward, out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(rayOrigin, camera.transform.forward, out hit, Mathf.Infinity, layerMask))
         {
             if (hit.collider.gameObject.GetComponent<Enemy>() != null)
             {
                 Enemy[] e = GameObject.FindObjectsOfType<Enemy>();
                 foreach(Enemy en in e)
                 {
+					int status = en.GetComponent<EnemyPartHit> ().hitByPlayers;
                     if (en.gameObject != hit.collider.gameObject)
                     {
-                        en.gameObject.GetComponent<MeshRenderer>().material = normalEnemy;
-                    }
+						// Nur entfärben wenn auch der zweite Spieler nicht auf den part zeigt
+
+						if(status == 3 || status == hitStatus){
+							en.GetComponent<EnemyPartHit> ().hitByPlayers -= hitStatus;
+							if(status == 3){
+							en.gameObject.GetComponent<MeshRenderer>().material.color =playercolor2nd;
+							}
+						}else if(status != hitBy2ndPlayer){
+							//en.gameObject.GetComponent<MeshRenderer>().material = normalEnemy;	
+						//	en.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;	
+							switchColor(en.gameObject, Color.white);
+						}
+						//	en.gameObject.GetComponent<MeshRenderer>().material.color = playercolor2nd;
+								
+                    } 
                 }
-                hit.collider.gameObject.GetComponent<MeshRenderer>().material = lockedEnemy;
+
+				if(hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == 0 || hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == hitBy2ndPlayer ){
+				hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers += hitStatus;
+				}
+				
+				if(hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == 3){
+					//hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
+					switchColor(hit.collider.gameObject, Color.blue);
+				}else{
+					//hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = playercolor;
+					switchColor(hit.collider.gameObject, playercolor);
+				}
+
             }
         }
         else
@@ -174,9 +223,9 @@ public class Character : MonoBehaviour
 	#region Funktionen
 	public void GetWalkingMode()
 	{
-		if (InputManager.RunButtonDown())
+		if (inputManager.RunButtonDown())
 		{
-			if ((InputManager.MainJoystick().x == 0 && InputManager.MainJoystick().z == 0) || !isGrounded) 
+			if ((inputManager.MainJoystick().x == 0 && inputManager.MainJoystick().z == 0) || !isGrounded) 
 			{
 				return;
 			}
@@ -203,7 +252,7 @@ public class Character : MonoBehaviour
 			return;
 		}
 
-		if (InputManager.CrouchButton())
+		if (inputManager.CrouchButton())
 		{
 			if (walkingMode == WalkingMode.crouching)
 			{
@@ -223,7 +272,7 @@ public class Character : MonoBehaviour
 			}
 			return;
 		}
-		if ((InputManager.MainJoystick ().x == 0) && (InputManager.MainJoystick ().z == 0) && walkingMode != WalkingMode.crouching)
+		if ((inputManager.MainJoystick ().x == 0) && (inputManager.MainJoystick ().z == 0) && walkingMode != WalkingMode.crouching)
 		{
 			SwitchWalkingMode(WalkingMode.walking);
 		}
@@ -322,7 +371,8 @@ public class Character : MonoBehaviour
 
 	private void CalculateMoveDirection()
 	{
-		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		//moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		moveDirection = new Vector3(inputManager.MainHorizontal(), 0, inputManager.MainVertical());
 		moveDirection = transform.TransformDirection(moveDirection);
 
 		switch (walkingMode)
@@ -368,6 +418,12 @@ public class Character : MonoBehaviour
         
         return true;
     }
+	
+	void switchColor(GameObject gO, Color clr){					
+		foreach(Material mat in gO.GetComponent<MeshRenderer>().materials){
+			mat.color = clr;
+		}
+	}
 
     void OnApplicationQuit()
 	{
