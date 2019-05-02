@@ -185,6 +185,13 @@ public class Character : MonoBehaviour
 					//hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = playercolor;
 					switchColor(hit.collider.gameObject, playercolor);
 				}
+				#region angreifen
+							
+				if(inputManager.AttackButton()){
+					hit.collider.gameObject.GetComponent<EnemyPartHit>().attack();
+					
+				}
+				#endregion angreifen
 
             }
         }
@@ -192,6 +199,8 @@ public class Character : MonoBehaviour
         {
         }
         #endregion Gegner angucken
+		
+
 
         //Movement ganz am Ende
 
@@ -468,7 +477,7 @@ public class Character : MonoBehaviour
     }
 	
 	void switchColor(GameObject gO, Color clr){					
-		foreach(Material mat in gO.GetComponent<MeshRenderer>().materials){
+		foreach(Material mat in gO.GetComponent<Renderer>().materials){
 			mat.color = clr;
 		}
 	}
