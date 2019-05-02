@@ -45,6 +45,8 @@ public class Character : MonoBehaviour
 	public float timeForHealthRegen = 10f;
 	internal float healthRegenCooldown = 0f;
 
+    internal UI_Manager ui_man;
+
 	//Respawnsystem
 	[Header("Respawn")]
 	public float respawnTime = 5f;
@@ -101,6 +103,7 @@ public class Character : MonoBehaviour
         layerMask = 1 << 8 | 1 << 2;
         layerMask = ~layerMask;
         anim = GetComponentInChildren<Animator>();
+        ui_man = FindObjectOfType<UI_Manager>();
     }
 
 	void Update()
@@ -140,7 +143,7 @@ public class Character : MonoBehaviour
 
         #endregion Leben und Mana
 
-
+        #region Gegner angucken
         RaycastHit hit;
         Vector3 rayOrigin = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
         //Raycast in Richtung der Camera, was getroffen wird
@@ -188,7 +191,7 @@ public class Character : MonoBehaviour
         else
         {
         }
-
+        #endregion Gegner angucken
 
         //Movement ganz am Ende
 
@@ -337,8 +340,9 @@ public class Character : MonoBehaviour
 		float oldHealth = currentHealth;
 
 		currentHealth -= damage;
-		//Cooldown zum regenerieren wird gesetzt
-		healthRegenCooldown = timeForHealthRegen;
+        SendHPToUIMan();
+        //Cooldown zum regenerieren wird gesetzt
+        healthRegenCooldown = timeForHealthRegen;
 		//wenn der Spieler kein Leben übrig hat
 		if (currentHealth <= 0 && oldHealth > 0)
 		{
@@ -367,11 +371,22 @@ public class Character : MonoBehaviour
 		//Setzt Leben und Mana des Spielers wieder auf voll
 		currentHealth = maxHealth;
 		currentMana = maxMana;
-		//uiManager.UpdateHealth(currentHealth);
-		//uiManager.UpdateMana(currentMana);
-	}
+        //uiManager.UpdateHealth(currentHealth);
+        //uiManager.UpdateMana(currentMana);
+        SendHPToUIMan();
+    }
 
-
+    private void SendHPToUIMan()
+    {
+        if (mouse)
+        {
+            ui_man.UpdateHP(0, currentHealth);
+        }
+        else
+        {
+            ui_man.UpdateHP(1, currentHealth);
+        }
+    }
 
 	
 
@@ -384,7 +399,7 @@ public class Character : MonoBehaviour
 		if (currentMana < maxMana && manaRegenCooldown <= 0f)
 		{
 			currentMana += manaRegen;
-			//uiManager.UpdateMana(currentMana);
+			//ui_man.UpdateMana(currentMana);
 		}
 	}
 
@@ -397,8 +412,8 @@ public class Character : MonoBehaviour
 		if (currentHealth < maxHealth && healthRegenCooldown <= 0f)
 		{
 			currentHealth += healthRegen;
-			//uiManager.UpdateHealth(currentHealth);
-		}
+            SendHPToUIMan();
+        }
 	}
 
 	private void CalculateMoveDirection()

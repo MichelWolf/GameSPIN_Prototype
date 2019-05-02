@@ -37,7 +37,7 @@ public class Headbobber: MonoBehaviour
 		if(!mouse){
 			inputManager = new InputManagerController();
 		}
-		player = FindObjectOfType<Character> ();
+        player = GetComponentInParent<Character>();
 		bobs = transform.localPosition;
 	}
 
@@ -108,22 +108,28 @@ public class Headbobber: MonoBehaviour
 				waveslice = 0.0f;
 			}
 
-			Vector3 parentPos = transform.parent.gameObject.transform.localPosition;
-			if (player.walkingMode == Character.WalkingMode.walking || player.walkingMode == Character.WalkingMode.running) {
-				if (parentPos.y < standHeight) {
-					parentPos.y += 0.05f;
-				}
-				parentPos.y = Mathf.Clamp (parentPos.y, 0, standHeight);
-			} else if (player.walkingMode == Character.WalkingMode.crouching) {
-				if (parentPos.y > crouchHeight) {
-					parentPos.y -= 0.05f;
-				}
-				parentPos.y = Mathf.Clamp (parentPos.y, crouchHeight, Mathf.Infinity);
-			}
-			transform.parent.gameObject.transform.localPosition = parentPos;
+            Vector3 parentPos = transform.parent.gameObject.transform.localPosition;
+            if (player.walkingMode == Character.WalkingMode.walking || player.walkingMode == Character.WalkingMode.running)
+            {
+                if (parentPos.y < standHeight)
+                {
+                    parentPos.y += 0.05f;
+                }
+                parentPos.y = Mathf.Clamp(parentPos.y, 0, standHeight);
+            }
+            else if (player.walkingMode == Character.WalkingMode.crouching)
+            {
+                if (parentPos.y > crouchHeight)
+                {
+                    parentPos.y -= 0.05f;
+                }
+                parentPos.y = Mathf.Clamp(parentPos.y, crouchHeight, Mathf.Infinity);
+            }
+            transform.parent.gameObject.transform.localPosition = parentPos;
 
-		}
 
-	}
+        }
+
+    }
 
 }

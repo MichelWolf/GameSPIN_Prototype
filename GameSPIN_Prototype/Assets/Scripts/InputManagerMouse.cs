@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManagerMouse :InputManagerIF
+public class InputManagerMouse : InputManagerIF
 {
 	public static bool rightTriggerPressed = false;
 	public static bool leftTriggerPressed = false;
