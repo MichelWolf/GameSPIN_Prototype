@@ -61,7 +61,8 @@ public class Character : MonoBehaviour
     public Material normalEnemy;
     public Material lockedEnemy;
 
-
+    Animator anim;
+    bool idle = true;
 	//PostProcessingProfile ppp;
 	//VignetteModel.Settings pppSettings;
 
@@ -99,6 +100,7 @@ public class Character : MonoBehaviour
 
         layerMask = 1 << 8 | 1 << 2;
         layerMask = ~layerMask;
+        anim = GetComponentInChildren<Animator>();
     }
 
 	void Update()
@@ -213,8 +215,38 @@ public class Character : MonoBehaviour
 			falling = false;
 		}
 
-		
-		charContr.Move(moveDirection * Time.deltaTime);
+       
+
+        
+        if (walkingMode == WalkingMode.walking)
+        {
+            if (moveDirection.x == 0 && moveDirection.z == 0)
+            {
+                anim.Play("Idle@Idle");
+            }
+            else
+            {
+                anim.Play("Idle@Walking");
+            }
+        }
+        else if (walkingMode == WalkingMode.running)
+        {
+            anim.Play("Idle@Running");
+        }
+        else if (walkingMode == WalkingMode.crouching)
+        {
+            if (moveDirection.x == 0 && moveDirection.z == 0)
+            {
+                anim.Play("Idle@Crouch Idle");
+            }
+            else
+            {
+                anim.Play("Idle@Sneaking Forward");
+            }
+        }
+
+
+        charContr.Move(moveDirection * Time.deltaTime);
 			
 		charContr.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
 		
@@ -282,18 +314,18 @@ public class Character : MonoBehaviour
 	{
 		WalkingMode oldMode = walkingMode;
 		walkingMode = newMode;
-		// do stuff
-		if (oldMode == WalkingMode.crouching && newMode != WalkingMode.crouching)
-		{
-			charContr.height = standHeight;
-			charContr.center = new Vector3(0f, standHeight / 2, 0f);
-		}
-		else if (newMode == WalkingMode.crouching)
-		{
-			charContr.height = crouchHeight;
-			charContr.center = new Vector3(0f, crouchHeight / 2, 0f);
-		}
-	}
+        // do stuff
+        if (oldMode == WalkingMode.crouching && newMode != WalkingMode.crouching)
+        {
+            charContr.height = standHeight;
+            charContr.center = new Vector3(0f, standHeight / 2, 0f);
+        }
+        else if (newMode == WalkingMode.crouching)
+        {
+            charContr.height = crouchHeight;
+            charContr.center = new Vector3(0f, crouchHeight / 2, 0f);
+        }
+    }
 
 	public void HandleCurrentObjectLookedAt()
 	{
@@ -373,7 +405,8 @@ public class Character : MonoBehaviour
 	{
 		//moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		moveDirection = new Vector3(inputManager.MainHorizontal(), 0, inputManager.MainVertical());
-		moveDirection = transform.TransformDirection(moveDirection);
+
+        moveDirection = transform.TransformDirection(moveDirection);
 
 		switch (walkingMode)
 		{
