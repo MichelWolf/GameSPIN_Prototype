@@ -21,9 +21,10 @@ public class EnemyPartHit : MonoBehaviour
 	
 	
 	public void attack(){
-		golem.doDamage(damagePerHit);
+		golem.receiveDamage(damagePerHit);
 		damageCapacity -= damagePerHit;
 		if(detachable && damageCapacity < 0){
+		//	Destroy(gameObject.GetComponent("SkinnedMeshRenderer"));
 			detachableObject.SetActive(true);
 			this.gameObject.SetActive(false);
 		}

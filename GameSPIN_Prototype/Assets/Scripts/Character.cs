@@ -74,10 +74,17 @@ public class Character : MonoBehaviour
 	public Camera camera;
 	public Color playercolor;
 	
+	[Header("AttackProj")]
+	public GameObject firePoint;
+	public GameObject vfx;
+	
+	private GameObject effectToSpawn;
 	private InputManagerIF inputManager;
 	private int hitStatus;
 	private int hitBy2ndPlayer;
 	private Color playercolor2nd;
+	
+	
 
 	void Start()
 	{
@@ -92,6 +99,7 @@ public class Character : MonoBehaviour
 			hitStatus = 1;
 			playercolor2nd = Color.green;
 		}
+		 effectToSpawn = vfx;
 		Cursor.lockState = CursorLockMode.Locked;
 		charContr = GetComponent<CharacterController>();
 		currentMana = maxMana;
@@ -162,7 +170,7 @@ public class Character : MonoBehaviour
 						if(status == 3 || status == hitStatus){
 							en.GetComponent<EnemyPartHit> ().hitByPlayers -= hitStatus;
 							if(status == 3){
-							en.gameObject.GetComponent<MeshRenderer>().material.color =playercolor2nd;
+							en.gameObject.GetComponent<Renderer>().material.color =playercolor2nd;
 							}
 						}else if(status != hitBy2ndPlayer){
 							//en.gameObject.GetComponent<MeshRenderer>().material = normalEnemy;	
@@ -188,19 +196,23 @@ public class Character : MonoBehaviour
 				#region angreifen
 							
 				if(inputManager.AttackButton()){
-					hit.collider.gameObject.GetComponent<EnemyPartHit>().attack();
-					
+				//	hit.collider.gameObject.GetComponent<EnemyPartHit>().attack();
+				//	firePoint.transform.localRotation = Quaternion.Lerp(firePoint.transform.rotation, Quaternion.LookRotation(camera.transform.forward - firePoint.transform.position),1);
+					SpawnVFX();
 				}
 				#endregion angreifen
 
             }
         }
         else
-        {
+        {			
         }
         #endregion Gegner angucken
 		
-
+	if(inputManager.AttackButton()){
+				//	firePoint.transform.localRotation = Quaternion.Lerp(firePoint.transform.rotation, Quaternion.LookRotation(camera.transform.forward - firePoint.transform.position),1);
+					SpawnVFX();
+			}
 
         //Movement ganz am Ende
 
@@ -486,5 +498,14 @@ public class Character : MonoBehaviour
 	{
 		//pppSettings.intensity = 0;
 		//ppp.vignette.settings = pppSettings;
+	}
+	
+	void SpawnVFX(){
+		GameObject vfx;
+		if(firePoint != null){
+			vfx = Instantiate(effectToSpawn, firePoint.transform.position, camera.transform.rotation);
+		} else {
+			Debug.Log("No Fire Point");
+		}
 	}
 }
