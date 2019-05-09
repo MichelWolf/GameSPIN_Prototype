@@ -157,41 +157,42 @@ public class Character : MonoBehaviour
         //Raycast in Richtung der Camera, was getroffen wird
         if (Physics.Raycast(rayOrigin, camera.transform.forward, out hit, Mathf.Infinity, layerMask))
         {
-            if (hit.collider.gameObject.GetComponent<Enemy>() != null)
+            if (hit.collider.gameObject.GetComponent<ColliderPartGolem>() != null)
             {
-                Enemy[] e = GameObject.FindObjectsOfType<Enemy>();
-                foreach(Enemy en in e)
+                ColliderPartGolem[] e = GameObject.FindObjectsOfType<ColliderPartGolem>();
+                foreach(ColliderPartGolem en in e)
                 {
-					int status = en.GetComponent<EnemyPartHit> ().hitByPlayers;
+					GameObject objectForCollider = en.GetComponent<ColliderPartGolem>().collisionObject;
+					int status = objectForCollider.GetComponent<EnemyPartHit> ().hitByPlayers;
                     if (en.gameObject != hit.collider.gameObject)
                     {
 						// Nur entfärben wenn auch der zweite Spieler nicht auf den part zeigt
-
+						
 						if(status == 3 || status == hitStatus){
-							en.GetComponent<EnemyPartHit> ().hitByPlayers -= hitStatus;
+							objectForCollider.GetComponent<EnemyPartHit> ().hitByPlayers -= hitStatus;
 							if(status == 3){
-							en.gameObject.GetComponent<Renderer>().material.color =playercolor2nd;
+							objectForCollider.gameObject.GetComponent<Renderer>().material.color =playercolor2nd;
 							}
 						}else if(status != hitBy2ndPlayer){
 							//en.gameObject.GetComponent<MeshRenderer>().material = normalEnemy;	
 						//	en.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;	
-							switchColor(en.gameObject, Color.white);
+							switchColor(objectForCollider.gameObject, Color.white);
 						}
 						//	en.gameObject.GetComponent<MeshRenderer>().material.color = playercolor2nd;
 								
                     } 
                 }
 
-				if(hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == 0 || hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == hitBy2ndPlayer ){
-				hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers += hitStatus;
+				if(hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject.GetComponent<EnemyPartHit> ().hitByPlayers == 0 || hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject.GetComponent<EnemyPartHit> ().hitByPlayers == hitBy2ndPlayer ){
+				hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject.GetComponent<EnemyPartHit> ().hitByPlayers += hitStatus;
 				}
 				
-				if(hit.collider.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == 3){
+				if(hit.collider.GetComponent<ColliderPartGolem>().collisionObject.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == 3){
 					//hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
-					switchColor(hit.collider.gameObject, Color.blue);
+					switchColor(hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject, Color.blue);
 				}else{
 					//hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = playercolor;
-					switchColor(hit.collider.gameObject, playercolor);
+					switchColor(hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject, playercolor);
 				}
 				#region angreifen
 							
