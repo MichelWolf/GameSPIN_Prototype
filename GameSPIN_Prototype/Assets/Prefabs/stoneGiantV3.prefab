@@ -1873,7 +1873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 3
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -2418,7 +2418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -3607,7 +3607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -4060,7 +4060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -4551,7 +4551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 2
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -6060,7 +6060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 3
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -6195,7 +6195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7cde4cc7e2b744dbc5b653c66dd0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitpoints: 100
+  hitpoints: 150
   healthBar: {fileID: 7871722279019376961}
   firePoint: {fileID: 7871722278412709070}
   vfx:
@@ -6598,7 +6598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -7055,7 +7055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -8109,7 +8109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 3
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -8937,7 +8937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -8993,9 +8993,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3737453897211932863}
+  - component: {fileID: 1335386815}
+  - component: {fileID: 1335386814}
   m_Layer: 0
   m_Name: DEF-spine.006_end
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9014,6 +9016,33 @@ Transform:
   m_Father: {fileID: 8588749526401944022}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1335386815
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3681617790510018590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.003
+  m_Height: 0.008
+  m_Direction: 1
+  m_Center: {x: 0.0005, y: -0.002, z: 0}
+--- !u!114 &1335386814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3681617790510018590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0afa1c17e293746a7522f5fce75d0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionObject: {fileID: 1389862153245713083}
 --- !u!1 &3688464646977057836
 GameObject:
   m_ObjectHideFlags: 0
@@ -10075,7 +10104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -10498,7 +10527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -11929,7 +11958,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -12415,7 +12444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -12840,7 +12869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -13482,7 +13511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 2
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -13873,7 +13902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 1
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -14421,7 +14450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 3
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -14757,7 +14786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 1
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -22876,7 +22905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 2
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -23546,7 +23575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}
@@ -24124,7 +24153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitByPlayers: 0
-  damagePerHit: 5
+  damagePerHit: 10
   damageCapacity: 20
   detachable: 0
   detachableObject: {fileID: 0}

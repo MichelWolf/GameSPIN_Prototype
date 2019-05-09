@@ -212,7 +212,7 @@ MonoBehaviour:
   health: 10
   damageToPlayer: 10
   damageOnHit: 10
-  speed: 1
+  speed: 1.5
   targetPlayer: {fileID: 0}
 --- !u!1 &6686071661767400114
 GameObject:

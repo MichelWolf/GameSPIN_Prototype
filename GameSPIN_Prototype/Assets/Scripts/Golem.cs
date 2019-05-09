@@ -23,7 +23,7 @@ public class Golem : MonoBehaviour
 	private Quaternion targetRot;
 	private float speed = 0;
 	private GameObject instantiatedProj;
-	private float attackpause=2f;
+	private float attackpause=4f;
 	
 	private CameraShake[] cams;
 	
@@ -37,6 +37,7 @@ public class Golem : MonoBehaviour
 		effectToSpawn = vfx[0];
 		speed += effectToSpawn.GetComponent<GolemProjectileMove>().speed;
 		cams = FindObjectsOfType<CameraShake>();
+		secondTarget = players[0];
     }
 	
 
@@ -90,9 +91,10 @@ public class Golem : MonoBehaviour
 		target = null;
 		foreach(GameObject enemy in players){
 			float dist = Vector3.Distance(enemy.transform.position, transform.position);
-			secondTarget = target;
 			if(dist < aggroRange && dist < disttmp ){
+				if(target != null){
 				secondTarget = target;
+				}
 				disttmp = dist;
 				target = enemy;
 			}
@@ -147,5 +149,9 @@ public class Golem : MonoBehaviour
 		foreach(CameraShake cam in cams){
 			cam.ShakeCamera(1f, 1f);
 		}
+	}
+	
+	public void refreshTargetList(){
+		players = GameObject.FindGameObjectsWithTag("Player");
 	}
 }

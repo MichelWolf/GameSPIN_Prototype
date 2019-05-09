@@ -114,6 +114,7 @@ public class Character : MonoBehaviour
         layerMask = ~layerMask;
         anim = GetComponentInChildren<Animator>();
         ui_man = FindObjectOfType<UI_Manager>();
+		SendHPToUIMan();
     }
 
 	void Update()
@@ -371,7 +372,10 @@ public class Character : MonoBehaviour
 		//wenn der Spieler kein Leben übrig hat
 		if (currentHealth <= 0 && oldHealth > 0)
 		{
-			StartCoroutine (Respawn ());
+			//StartCoroutine (Respawn ());
+		    gameObject.tag = "Untagged";
+			ui_man.informPlayerDeath();
+			this.enabled = false;
 		}
 	}
 
