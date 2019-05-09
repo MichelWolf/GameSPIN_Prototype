@@ -24,6 +24,9 @@ public class Golem : MonoBehaviour
 	private float speed = 0;
 	private GameObject instantiatedProj;
 	private float attackpause=2f;
+	
+	private CameraShake[] cams;
+	
     void Start()
     {
 		aggroRange = 20f;
@@ -33,16 +36,19 @@ public class Golem : MonoBehaviour
 		anim = this.gameObject.GetComponent<Animator>();
 		effectToSpawn = vfx[0];
 		speed += effectToSpawn.GetComponent<GolemProjectileMove>().speed;
+		cams = FindObjectsOfType<CameraShake>();
     }
 	
 
 	
     void Update()
     {
+		if(currentHitpoints > 0){
         if(!paused && target != null){
 			StartCoroutine(attack());			
 		}		
 				findClosestTarget();
+		}
     }
 	
 	bool playerInRange(){
@@ -55,6 +61,8 @@ public class Golem : MonoBehaviour
 		int randomNumber = Random.Range(1,3);
 		if(randomNumber == 1){
 			effectToSpawn = vfx[0];
+			//shakeCamera();
+			
 		} else {effectToSpawn = vfx[1];}
 		GameObject crystal;
 		crystal = Instantiate(crystalEnemy,transform.position,transform.rotation);
@@ -82,7 +90,7 @@ public class Golem : MonoBehaviour
 		target = null;
 		foreach(GameObject enemy in players){
 			float dist = Vector3.Distance(enemy.transform.position, transform.position);
-			
+			secondTarget = target;
 			if(dist < aggroRange && dist < disttmp ){
 				secondTarget = target;
 				disttmp = dist;
@@ -133,5 +141,11 @@ public class Golem : MonoBehaviour
 		vfx = Instantiate(effectToSpawn, new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z), target.transform.rotation);
 		vfx.GetComponent<GolemProjectileMove>().speed = 0;
 		instantiatedProj = vfx;
+	}
+	
+	public void shakeCamera(){
+		foreach(CameraShake cam in cams){
+			cam.ShakeCamera(1f, 1f);
+		}
 	}
 }

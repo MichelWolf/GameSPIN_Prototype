@@ -78,12 +78,14 @@ public class Character : MonoBehaviour
 	public GameObject firePoint;
 	public GameObject vfx;
 	
+	public GameObject uiForPlayer;
+	
 	private GameObject effectToSpawn;
 	private InputManagerIF inputManager;
 	private int hitStatus;
 	private int hitBy2ndPlayer;
 	private Color playercolor2nd;
-	
+	private bool cooldown=false;
 	
 
 	void Start()
@@ -363,6 +365,7 @@ public class Character : MonoBehaviour
 
 		currentHealth -= damage;
         SendHPToUIMan();
+		uiForPlayer.GetComponent<UiScript>().activateDamageEffect();
         //Cooldown zum regenerieren wird gesetzt
         healthRegenCooldown = timeForHealthRegen;
 		//wenn der Spieler kein Leben übrig hat
@@ -502,11 +505,23 @@ public class Character : MonoBehaviour
 	}
 	
 	void SpawnVFX(){
+		if(!cooldown){
+			cooldown=true;
 		GameObject vfx;
 		if(firePoint != null){
 			vfx = Instantiate(effectToSpawn, firePoint.transform.position, camera.transform.rotation);
+			vfx.GetComponent<PlayerProjectileMove>().setUiScript(uiForPlayer.GetComponent<UiScript>());
 		} else {
 			Debug.Log("No Fire Point");
 		}
+			StartCoroutine(coolDown(.5f));
+		}
+		
 	}
+	
+	IEnumerator coolDown(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+		cooldown = false;
+    }
 }

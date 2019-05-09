@@ -50,4 +50,5 @@ public class CrystalEnemy : MonoBehaviour
 	public void setTargetPlayer(GameObject player){
 		targetPlayer = player;
 	}
+	
 }

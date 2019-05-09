@@ -121,7 +121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1032452561
 Transform:
   m_ObjectHideFlags: 0
@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 2176999527976692350}
   - component: {fileID: 2176999527976692347}
   - component: {fileID: 2176999528593639705}
+  - component: {fileID: 498411651}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -398,6 +399,23 @@ MonoBehaviour:
   sensitivity: 2
   smoothing: 2
   mouse: 1
+--- !u!114 &498411651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176999527976692320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f350eb0d9b16d4d93ef994775d6983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMode: 0
+  shakeAmount: 3
+  shakeDuration: 3
+  smooth: 0
+  smoothAmount: 5
 --- !u!1 &2176999528348311567
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +510,7 @@ MonoBehaviour:
   playercolor: {r: 1, g: 0, b: 0, a: 0}
   firePoint: {fileID: 697587389}
   vfx: {fileID: 8927402329155092487, guid: e042d161c73f5d647ba17622d3366e4d, type: 3}
+  uiForPlayer: {fileID: 0}
 --- !u!114 &2176999528348311565
 MonoBehaviour:
   m_ObjectHideFlags: 0
