@@ -57,6 +57,8 @@ public class Character : MonoBehaviour
 	private Vector3 moveDirection = Vector3.zero;
 
 	Gravity grav;
+    public AudioClip landingSound;
+    public AudioSource audioSource;
 	//Image fadenkreuzImage;
 	camMouseLook mouseLook;
 
@@ -114,7 +116,7 @@ public class Character : MonoBehaviour
         layerMask = ~layerMask;
         anim = GetComponentInChildren<Animator>();
         ui_man = FindObjectOfType<UI_Manager>();
-		SendHPToUIMan();
+		//SendHPToUIMan();
     }
 
 	void Update()
@@ -238,6 +240,7 @@ public class Character : MonoBehaviour
 			if(lastVerticalVelocity < -7f)
 			{
                 //Landen-Sound
+                audioSource.PlayOneShot(landingSound, 0.3f);
 			}
 
 			falling = false;

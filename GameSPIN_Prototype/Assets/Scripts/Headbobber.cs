@@ -24,6 +24,9 @@ public class Headbobber: MonoBehaviour
 	public bool playedFootstep = false;
 	float waveslice = 0.0f;
 
+    public AudioClip[] footsteps;
+    public AudioSource audioSource;
+
 	Vector3 bobs;// = transform.localPosition;
 
 	Character player;
@@ -92,11 +95,13 @@ public class Headbobber: MonoBehaviour
 				}
 				if (waveslice < -0.95 && !playedFootstep) {
 					if (player.walkingMode != Character.WalkingMode.crouching) {
-						//FMODUnity.RuntimeManager.PlayOneShotAttached (player.FootstepsEvent, this.transform.gameObject);
+                        //FMODUnity.RuntimeManager.PlayOneShotAttached (player.FootstepsEvent, this.transform.gameObject);
+                        audioSource.PlayOneShot(footsteps[Random.Range(0,footsteps.Length-1)],0.4f);
 						playedFootstep = true;
 					} else {
-						//FMODUnity.RuntimeManager.PlayOneShotAttached (player.CrouchingFootstepsEvent, this.transform.gameObject);
-						playedFootstep = true;
+                        //FMODUnity.RuntimeManager.PlayOneShotAttached (player.CrouchingFootstepsEvent, this.transform.gameObject);
+                        audioSource.PlayOneShot(footsteps[Random.Range(0, footsteps.Length - 1)],0.4f);
+                        playedFootstep = true;
 					}
 				}
 				if (waveslice > 0.5) {
