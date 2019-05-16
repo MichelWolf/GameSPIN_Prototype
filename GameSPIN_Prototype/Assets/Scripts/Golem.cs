@@ -108,14 +108,17 @@ public class Golem : MonoBehaviour
 	}
 	
 	public void fireVFX(){
+		if(target!=null){
 		instantiatedProj.GetComponent<GolemProjectileMove>().dot = false;
 		var targetPoint = target.transform.position;
 		var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
 		instantiatedProj.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 0.1f);
 		instantiatedProj.GetComponent<GolemProjectileMove>().speed += speed;
+		}
 	}
 	
 		void SpawnVFX(){
+		if(target!=null){
 		GameObject vfx;
 		if(firePoint != null){
 			GameObject aimAtObj = new GameObject();
@@ -135,6 +138,7 @@ public class Golem : MonoBehaviour
 			Debug.Log("out");
 		} else {
 			Debug.Log("No Fire Point");
+		}
 		}
 	}
 	

@@ -34,7 +34,7 @@ public class PlayerProjectileMove : MonoBehaviour
 			col.gameObject.GetComponent<ColliderPartGolem>().hitCollider();
 			if(ui != null){
 			ui.activateHitmarker();
-			}
+		}
 			Destroy(gameObject);		
 		}else if(col.gameObject.tag == "EnemySmall"){
 			Instantiate(explosion,transform.position, transform.rotation);

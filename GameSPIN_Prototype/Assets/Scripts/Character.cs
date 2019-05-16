@@ -79,17 +79,20 @@ public class Character : MonoBehaviour
 	
 	[Header("AttackProj")]
 	public GameObject firePoint;
-	public GameObject vfx;
+	public GameObject[] vfx;
 	
 	public GameObject uiForPlayer;
 	
 	private GameObject effectToSpawn;
+	private GameObject effectToSpawnStart;
+	private GameObject effectToSpawnImplosion;
 	private InputManagerIF inputManager;
 	private int hitStatus;
 	private int hitBy2ndPlayer;
 	private Color playercolor2nd;
 	private bool cooldown=false;
-
+	public Animator animDummy;
+	
     public GameObject teleportParticleStart;
     public GameObject teleportParticleEnd;
     public float dashCooldown;
@@ -110,7 +113,9 @@ public class Character : MonoBehaviour
 			hitStatus = 1;
 			playercolor2nd = Color.green;
 		}
-		 effectToSpawn = vfx;
+		effectToSpawn = vfx[0];
+		effectToSpawnStart = vfx[1];
+		effectToSpawnImplosion = vfx[2];
 		Cursor.lockState = CursorLockMode.Locked;
 		charContr = GetComponent<CharacterController>();
 		currentMana = maxMana;
@@ -171,6 +176,7 @@ public class Character : MonoBehaviour
         //Raycast in Richtung der Camera, was getroffen wird
         if (Physics.Raycast(rayOrigin, camera.transform.forward, out hit, Mathf.Infinity, layerMask))
         {
+			ColliderPartGolem colPartHit = hit.collider.gameObject.GetComponent<ColliderPartGolem>();
             if (hit.collider.gameObject.GetComponent<ColliderPartGolem>() != null)
             {
                 ColliderPartGolem[] e = GameObject.FindObjectsOfType<ColliderPartGolem>();
@@ -197,26 +203,17 @@ public class Character : MonoBehaviour
                     } 
                 }
 
-				if(hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject.GetComponent<EnemyPartHit> ().hitByPlayers == 0 || hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject.GetComponent<EnemyPartHit> ().hitByPlayers == hitBy2ndPlayer ){
-				hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject.GetComponent<EnemyPartHit> ().hitByPlayers += hitStatus;
+				EnemyPartHit enemyPart = colPartHit.collisionObject.GetComponent<EnemyPartHit>();
+
+				if(enemyPart.hitByPlayers == 0 || enemyPart.hitByPlayers == hitBy2ndPlayer ){
+				   enemyPart.hitByPlayers += hitStatus;
 				}
 				
-				if(hit.collider.GetComponent<ColliderPartGolem>().collisionObject.gameObject.GetComponent<EnemyPartHit> ().hitByPlayers == 3){
-					//hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
-					switchColor(hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject, Color.blue);
+				if(enemyPart.hitByPlayers == 3){
+					switchColor(colPartHit.collisionObject, Color.blue);
 				}else{
-					//hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = playercolor;
-					switchColor(hit.collider.gameObject.GetComponent<ColliderPartGolem>().collisionObject, playercolor);
+					switchColor(colPartHit.collisionObject, playercolor);
 				}
-				#region angreifen
-							
-				if(inputManager.AttackButton()){
-				//	hit.collider.gameObject.GetComponent<EnemyPartHit>().attack();
-				//	firePoint.transform.localRotation = Quaternion.Lerp(firePoint.transform.rotation, Quaternion.LookRotation(camera.transform.forward - firePoint.transform.position),1);
-					SpawnVFX();
-				}
-				#endregion angreifen
-
             }
         }
         else
@@ -225,8 +222,8 @@ public class Character : MonoBehaviour
         #endregion Gegner angucken
 		
 	if(inputManager.AttackButton()){
-				//	firePoint.transform.localRotation = Quaternion.Lerp(firePoint.transform.rotation, Quaternion.LookRotation(camera.transform.forward - firePoint.transform.position),1);
-					SpawnVFX();
+				anim.SetTrigger("Attack");
+				animDummy.SetTrigger("Attack");
 			}
 
         //Movement ganz am Ende
@@ -262,26 +259,27 @@ public class Character : MonoBehaviour
         {
             if (moveDirection.x == 0 && moveDirection.z == 0)
             {
-                anim.Play("Idle@Idle");
+                anim.SetTrigger("Idle");
+				animDummy.SetTrigger("Idle");
             }
             else
             {
-                anim.Play("Idle@Walking");
+				anim.SetTrigger("Walk");
+				animDummy.SetTrigger("Walk");
             }
         }
         else if (walkingMode == WalkingMode.running)
         {
-            anim.Play("Idle@Running");
+				anim.SetTrigger("Run");
+				animDummy.SetTrigger("Run");
         }
         else if (walkingMode == WalkingMode.crouching)
         {
             if (moveDirection.x == 0 && moveDirection.z == 0)
             {
-                anim.Play("Idle@Crouch Idle");
             }
             else
             {
-                anim.Play("Idle@Sneaking Forward");
             }
         }
 
@@ -547,17 +545,32 @@ public class Character : MonoBehaviour
 	}
 	
 	void SpawnVFX(){
-		if(!cooldown){
-			cooldown=true;
+		//if(!cooldown){
+		//	cooldown=true;
 		GameObject vfx;
 		if(firePoint != null){
 			vfx = Instantiate(effectToSpawn, firePoint.transform.position, camera.transform.rotation);
+			Instantiate(effectToSpawnStart, firePoint.transform.position, camera.transform.rotation);
 			vfx.GetComponent<PlayerProjectileMove>().setUiScript(uiForPlayer.GetComponent<UiScript>());
 		} else {
 			Debug.Log("No Fire Point");
 		}
-			StartCoroutine(coolDown(.5f));
+			//StartCoroutine(coolDown(.5f));
+		//}
+		
+	}
+	
+	void SpawnVFXImplosion(){
+		//if(!cooldown){
+		//	cooldown=true;
+		GameObject vfx;
+		if(firePoint != null){			
+			Instantiate(effectToSpawnImplosion, firePoint.transform.position, camera.transform.rotation);
+		} else {
+			Debug.Log("No Fire Point");
 		}
+			//StartCoroutine(coolDown(.5f));
+		//}
 		
 	}
 	

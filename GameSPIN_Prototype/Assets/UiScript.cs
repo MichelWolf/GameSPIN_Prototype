@@ -16,6 +16,9 @@ public class UiScript : MonoBehaviour
 
 		 hitmarkerO.GetComponent<Image>().color = new Color(1,1,1,0);
 		 damageEffect.GetComponent<Image>().color = new Color(1,1,1,0);
+		float worldScreenHeight = Camera.main.orthographicSize * 2.0f;
+		float worldScreenWidth = (worldScreenHeight / Screen.height) * Screen.width;
+	//	damageEffect.GetComponent<RectTransform>().sizeDelta= new Vector2(1920, 1080);
 
     }
 
@@ -30,7 +33,6 @@ public class UiScript : MonoBehaviour
 		float alpha = obj.GetComponent<Image>().color.a;
 		for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
 		{
-			Debug.Log("in coro");
 			Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha,aValue,t));
 			obj.GetComponent<Image>().color = newColor;
 			yield return null;
