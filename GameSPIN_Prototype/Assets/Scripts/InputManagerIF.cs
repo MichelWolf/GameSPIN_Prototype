@@ -12,7 +12,7 @@ interface InputManagerIF
 	bool ReloadButton();
 	bool InteractButton();
 	bool InteractButtonDown();
-	bool AimButton();
+	bool DashButtonDown();
 	bool AttackButton();
 	bool RunButtonDown();
 	bool TeleportButton();

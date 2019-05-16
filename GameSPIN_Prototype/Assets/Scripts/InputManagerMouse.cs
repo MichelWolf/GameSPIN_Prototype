@@ -61,9 +61,9 @@ public class InputManagerMouse : InputManagerIF
 		return Input.GetButtonDown ("Interact");
 	}
 
-	public bool AimButton()
+	public bool DashButtonDown()
 	{
-		return Input.GetButton("Aim");
+		return Input.GetButtonDown("Dash");
 	}
 	public bool AttackButton()
 	{

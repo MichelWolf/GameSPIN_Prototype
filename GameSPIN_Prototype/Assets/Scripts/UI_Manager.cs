@@ -15,6 +15,8 @@ public class UI_Manager : MonoBehaviour
 	private Golem golem;
     Slider p1_hp;
     Slider p2_hp;
+    Image p1_tpcd;
+    Image p2_tpcd;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,9 @@ public class UI_Manager : MonoBehaviour
         inputManagerC = new InputManagerController();
         p1_hp = GameObject.Find("P1_HPBar").GetComponent<Slider>();
         p2_hp = GameObject.Find("P2_HPBar").GetComponent<Slider>();
-		playersAlive = 2;
+        p1_tpcd = GameObject.Find("P1_TPCD").GetComponent<Image>();
+        p2_tpcd = GameObject.Find("P2_TPCD").GetComponent<Image>();
+        playersAlive = 2;
 		golemA = GameObject.FindGameObjectsWithTag("Enemy");
 		golem = golemA[0].GetComponent<Golem>();
     }
@@ -94,4 +98,32 @@ public class UI_Manager : MonoBehaviour
 			ToggleDeath();
 		}
 	}
+
+    public void UpdateTPCD(int playerID, float cd)
+    {
+        if (playerID == 0)
+        {
+            p1_tpcd.fillAmount = cd;
+            if (cd > 1)
+            {
+                p1_tpcd.color = Color.yellow;
+            }
+            else
+            {
+                p1_tpcd.color = Color.black;
+            }
+        }
+        else if (playerID == 1)
+        {
+            p2_tpcd.fillAmount = cd;
+            if (cd > 1)
+            {
+                p2_tpcd.color = Color.yellow;
+            }
+            else
+            {
+                p2_tpcd.color = Color.black;
+            }
+        }
+    }
 }

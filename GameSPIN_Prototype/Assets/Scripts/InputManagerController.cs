@@ -61,9 +61,9 @@ public class InputManagerController : InputManagerIF
 		return Input.GetButtonDown ("InteractJ");
 	}
 
-	public bool AimButton()
+	public bool DashButtonDown()
 	{
-		return Input.GetButton("AimJ");
+		return Input.GetButtonDown("DashJ");
 	}
 	public bool AttackButton()
 	{

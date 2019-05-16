@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 2176999528593639705}
   - component: {fileID: 498411651}
   - component: {fileID: 338484146}
+  - component: {fileID: 594626790}
   m_Layer: 8
   m_Name: Camera
   m_TagString: MainCamera
@@ -520,6 +521,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &594626790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2176999527976692320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: ec1e0b5279575194495616408f324a53, type: 2}
 --- !u!1 &2176999528348311567
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +632,11 @@ MonoBehaviour:
   firePoint: {fileID: 697587389}
   vfx: {fileID: 8927402329155092487, guid: e042d161c73f5d647ba17622d3366e4d, type: 3}
   uiForPlayer: {fileID: 0}
+  teleportParticleStart: {fileID: 1072804416343437144, guid: 035f24eb2fb72c844b4d05c7fb7f9478,
+    type: 3}
+  teleportParticleEnd: {fileID: 1072804416343437144, guid: 2c57a5b38a34f4b40b49ce39985a7644,
+    type: 3}
+  dashCooldown: 2.5
 --- !u!114 &2176999528348311565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1153,9 +1172,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54703f7a1bdab43419cb12e2e21a1a2c, type: 3}
---- !u!1 &345749628 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100166, guid: 54703f7a1bdab43419cb12e2e21a1a2c,
+--- !u!4 &345777180 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400166, guid: 54703f7a1bdab43419cb12e2e21a1a2c,
     type: 3}
   m_PrefabInstance: {fileID: 345653050}
   m_PrefabAsset: {fileID: 0}
@@ -1183,9 +1202,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 345653050}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &345777180 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400166, guid: 54703f7a1bdab43419cb12e2e21a1a2c,
+--- !u!1 &345749628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100166, guid: 54703f7a1bdab43419cb12e2e21a1a2c,
     type: 3}
   m_PrefabInstance: {fileID: 345653050}
   m_PrefabAsset: {fileID: 0}

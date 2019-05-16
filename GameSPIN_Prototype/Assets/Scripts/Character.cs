@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
 using UnityEngine.UI;
 //using UnityEngine.PostProcessing;
 
@@ -88,9 +89,15 @@ public class Character : MonoBehaviour
 	private int hitBy2ndPlayer;
 	private Color playercolor2nd;
 	private bool cooldown=false;
-	
 
-	void Start()
+    public GameObject teleportParticleStart;
+    public GameObject teleportParticleEnd;
+    public float dashCooldown;
+    private float timeSinceDashed;
+    PostProcessingProfile ppp;
+    ChromaticAberrationModel.Settings chromAbbSettings;
+
+    void Start()
 	{
 		if(!mouse){
 			inputManager = new InputManagerController();
@@ -116,6 +123,8 @@ public class Character : MonoBehaviour
         layerMask = ~layerMask;
         anim = GetComponentInChildren<Animator>();
         ui_man = FindObjectOfType<UI_Manager>();
+        timeSinceDashed = dashCooldown;
+        ppp = GetComponentInChildren<PostProcessingBehaviour>().profile;
 		//SendHPToUIMan();
     }
 
@@ -276,8 +285,34 @@ public class Character : MonoBehaviour
             }
         }
 
-
-        charContr.Move(moveDirection * Time.deltaTime);
+        if (inputManager.DashButtonDown() && timeSinceDashed > dashCooldown)
+        {
+            Instantiate(teleportParticleStart, this.gameObject.transform.GetChild(0).transform.position, this.gameObject.transform.GetChild(0).transform.rotation);
+            charContr.Move(moveDirection * Time.deltaTime * 50f);
+            Instantiate(teleportParticleEnd, this.gameObject.transform.GetChild(0).transform.position, this.gameObject.transform.GetChild(0).transform.rotation);
+            timeSinceDashed = 0f;
+            chromAbbSettings.intensity = 5;
+            ppp.chromaticAberration.settings = chromAbbSettings;
+        }
+        else
+        {
+            charContr.Move(moveDirection * Time.deltaTime);
+        }
+        
+        if(timeSinceDashed <= dashCooldown)
+        {
+            chromAbbSettings.intensity = 5 - 5*(timeSinceDashed/dashCooldown);
+            ppp.chromaticAberration.settings = chromAbbSettings;
+            timeSinceDashed += Time.deltaTime;
+            if (mouse)
+            {
+                ui_man.UpdateTPCD(0, timeSinceDashed / dashCooldown);
+            }
+            else
+            {
+                ui_man.UpdateTPCD(1, timeSinceDashed / dashCooldown);
+            }
+        }
 			
 		charContr.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
 		

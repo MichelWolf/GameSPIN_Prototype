@@ -236,6 +236,11 @@ MonoBehaviour:
   firePoint: {fileID: 4543281403251793689}
   vfx: {fileID: 8927402329155092487, guid: e042d161c73f5d647ba17622d3366e4d, type: 3}
   uiForPlayer: {fileID: 0}
+  teleportParticleStart: {fileID: 1072804416343437144, guid: 035f24eb2fb72c844b4d05c7fb7f9478,
+    type: 3}
+  teleportParticleEnd: {fileID: 1072804416343437144, guid: 2c57a5b38a34f4b40b49ce39985a7644,
+    type: 3}
+  dashCooldown: 2.5
 --- !u!114 &7872294605867745802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +366,7 @@ GameObject:
   - component: {fileID: 4130979970431969732}
   - component: {fileID: 915520437}
   - component: {fileID: 1068297629}
+  - component: {fileID: 222922782}
   m_Layer: 8
   m_Name: Camera
   m_TagString: CameraPlayerTwo
@@ -591,6 +597,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &222922782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7872294605962741863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 08f601583f6c5894ca9efa1b3290c7d5, type: 2}
 --- !u!1 &7872294607295127057
 GameObject:
   m_ObjectHideFlags: 0
