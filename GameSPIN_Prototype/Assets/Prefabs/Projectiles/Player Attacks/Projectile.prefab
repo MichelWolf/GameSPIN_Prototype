@@ -9587,3 +9587,5 @@ MonoBehaviour:
   range: 20
   explosion: {fileID: 2510512413894954740, guid: ab22bee6505461a4dbb929ade8ff0a0a,
     type: 3}
+  crystalForceField: {fileID: 4647103244599679235, guid: b8ed9a8f80278304e80187917d6c4770,
+    type: 3}

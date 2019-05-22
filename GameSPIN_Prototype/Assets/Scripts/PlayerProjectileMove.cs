@@ -12,6 +12,7 @@ public class PlayerProjectileMove : MonoBehaviour
 	public float range;
 	private UiScript ui;
 	public GameObject explosion;
+    public GameObject crystalForceField;
 	private Vector3 startPos = new Vector3(0,0,0);
     void Start()
     {
@@ -44,6 +45,11 @@ public class PlayerProjectileMove : MonoBehaviour
 			}
 			Destroy(gameObject);
 		}
+        else if(col.gameObject.tag == "ExplodingCrystal")
+        {
+            Instantiate(crystalForceField, transform.position, transform.rotation);
+            col.gameObject.GetComponent<CrystalExplosion>();
+        }
 	}
 	
 	public void isOutOfRange(){
