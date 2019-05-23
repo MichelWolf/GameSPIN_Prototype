@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Wood.unity
     guid: f947ba3fadb8ae84b82cdf90703bf94a
+  - enabled: 1
+    path: Assets/Scenes/LavaCave.unity
+    guid: 28831fb67f4412d46a81eb993b689b73
   m_configObjects: {}

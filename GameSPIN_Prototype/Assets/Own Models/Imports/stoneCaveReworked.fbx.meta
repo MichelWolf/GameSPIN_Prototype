@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 59cbaad82bd0b524bbd0e102634c8360
+guid: a90c921cca30d8849b2d2aba9dba5d27
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
@@ -8,6 +8,11 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MatCrystal
+    second: {fileID: 2100000, guid: e301cc275121d254a9ecbe5199fd5917, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MatCrystal.001
     second: {fileID: 2100000, guid: e301cc275121d254a9ecbe5199fd5917, type: 2}
   materials:
     importMaterials: 1
@@ -36,7 +41,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1

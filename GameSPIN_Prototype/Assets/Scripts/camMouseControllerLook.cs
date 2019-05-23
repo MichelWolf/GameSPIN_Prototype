@@ -23,7 +23,7 @@ public class camMouseControllerLook : MonoBehaviour {
 		{
 			var md=new Vector2();
 			if(mouse == true){
-			md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));} else{
+			md = new Vector2(Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivity, Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity);} else{
 				md = InputManager.CameraJoystick();			
 }
 			md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
