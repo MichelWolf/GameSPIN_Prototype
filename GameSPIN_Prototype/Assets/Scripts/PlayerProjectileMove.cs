@@ -48,7 +48,7 @@ public class PlayerProjectileMove : MonoBehaviour
         else if(col.gameObject.tag == "ExplodingCrystal")
         {
             Instantiate(crystalForceField, transform.position, transform.rotation);
-            col.gameObject.GetComponent<CrystalExplosion>();
+            Destroy(col.gameObject);
         }
 	}
 	

@@ -28,11 +28,11 @@ public class InputManagerController : InputManagerIF
 
 	public float CameraHorizontal()
 	{
-		return Input.GetAxis ("J_CameraHorizontal") * 3f;
+		return Input.GetAxis ("J_CameraHorizontal");
 	}
 	public float CameraVertical()
 	{
-		return Input.GetAxis ("J_CameraVertical") * 3f;
+		return Input.GetAxis ("J_CameraVertical");
 	}
 	public Vector2 CameraJoystick()
 	{

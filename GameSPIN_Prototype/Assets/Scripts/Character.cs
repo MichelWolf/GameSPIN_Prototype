@@ -100,6 +100,12 @@ public class Character : MonoBehaviour
     PostProcessingProfile ppp;
     ChromaticAberrationModel.Settings chromAbbSettings;
 
+    internal float startedMoving;
+    public float accelerationTime;
+    public float accelerationMultiplier = 0;
+    internal float lastInputX = 0;
+    internal float lastInputZ = 0;
+
     void Start()
 	{
 		if(!mouse){
@@ -483,8 +489,20 @@ public class Character : MonoBehaviour
 
 	private void CalculateMoveDirection()
 	{
-		//moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		moveDirection = new Vector3(inputManager.MainHorizontal(), 0, inputManager.MainVertical());
+        
+        //moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        float inputX = inputManager.MainHorizontal();
+        float inputZ = inputManager.MainVertical();
+
+        //Beschleunigen
+        if ((lastInputX == 0 && lastInputZ == 0) && (inputX != 0 || inputZ != 0))
+        {
+            startedMoving = Time.time;
+        }
+        accelerationMultiplier = Mathf.Clamp01((Time.time - startedMoving) / accelerationTime);
+        lastInputX = inputX;
+        lastInputZ = inputZ;
+        moveDirection = new Vector3(inputX, 0, inputZ);
 
         moveDirection = transform.TransformDirection(moveDirection);
 
@@ -492,13 +510,17 @@ public class Character : MonoBehaviour
 		{
 		case WalkingMode.crouching:
 			moveDirection *= crouchSpeed;
-			break;
+            moveDirection *= accelerationMultiplier;
+
+            break;
 		case WalkingMode.running:
 			moveDirection *= runSpeed;
-			break;
+                moveDirection *= accelerationMultiplier;
+                break;
 		case WalkingMode.walking:
 			moveDirection *= walkSpeed;
-			break;
+                moveDirection *= accelerationMultiplier;
+                break;
 		}
 	}
 
