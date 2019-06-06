@@ -94,6 +94,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 0.23202491, g: 0.48306093, b: 1.2297322, a: 1}
+    - _EmissionColor: {r: 0.41607904, g: 0.8915979, b: 2.2706027, a: 1}
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

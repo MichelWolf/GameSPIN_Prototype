@@ -10,31 +10,22 @@ public class camMouseControllerLook : MonoBehaviour {
 	public float sensitivity = 5.0f;
 	public float smoothing = 2.0f;
 	public bool mouse = true ;
-    private InputManagerIF inputManager;
 
-    GameObject character;
+	GameObject character;
 	// Use this for initialization
 	void Start () {
 		character = this.transform.parent.transform.parent.gameObject;
-
-        if (!mouse)
-        {
-            inputManager = new InputManagerController();
-        }
-        else
-        {
-            inputManager = new InputManagerMouse();
-        }
-    }
+	}
 
 	// Update is called once per frame
 	void Update () {
 		if (Time.timeScale != 0)
 		{
 			var md=new Vector2();
-			
-		    md = inputManager.CameraJoystick();			
-            
+			if(mouse == true){
+			md = new Vector2(Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivity, Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity);} else{
+				md = InputManager.CameraJoystick();			
+}
 			md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
 			smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
 			smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);

@@ -28,11 +28,11 @@ public class InputManagerMouse : InputManagerIF
 
 	public float CameraHorizontal()
 	{
-		return Input.GetAxis ("K_CameraHorizontal");
+		return Input.GetAxis ("J_CameraHorizontal") * 3f;
 	}
 	public float CameraVertical()
 	{
-		return Input.GetAxis ("K_CameraVertical");
+		return Input.GetAxis ("J_CameraVertical") * 3f;
 	}
 	public Vector2 CameraJoystick()
 	{

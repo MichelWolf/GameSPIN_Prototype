@@ -14,7 +14,6 @@ public class Golem : MonoBehaviour
 	private GameObject secondTarget;
 	private float aggroRange;
 	private Animator anim;
-    internal GameObject[] crystals;
 	
 	[Header("AttackProj")]
 	public GameObject firePoint;
@@ -39,7 +38,6 @@ public class Golem : MonoBehaviour
 		speed += effectToSpawn.GetComponent<GolemProjectileMove>().speed;
 		cams = FindObjectsOfType<CameraShake>();
 		secondTarget = players[0];
-        crystals = GameObject.FindGameObjectsWithTag("EnemyCrystal");
     }
 	
 

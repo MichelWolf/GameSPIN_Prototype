@@ -6,13 +6,8 @@ interface InputManagerIF
 {
 	float MainHorizontal();
 	float MainVertical();
-	Vector3 MainJoystick();
-
-    float CameraHorizontal();
-    float CameraVertical();
-    Vector2 CameraJoystick();
-
-    bool JumpButton();
+	Vector3 MainJoystick();	
+	bool JumpButton();
 	bool CrouchButton();
 	bool ReloadButton();
 	bool InteractButton();

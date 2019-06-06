@@ -8,7 +8,6 @@ TagManager:
   - Enemy
   - EnemySmall
   - ExplodingCrystal
-  - EnemyCrystal
   layers:
   - Default
   - TransparentFX

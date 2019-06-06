@@ -9581,10 +9581,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62be5a99171ae2f42a44f2c22b12f8f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
+  speed: 15
   fireRate: 2
   spellDamage: 10
-  range: 50
+  range: 20
   explosion: {fileID: 2510512413894954740, guid: ab22bee6505461a4dbb929ade8ff0a0a,
     type: 3}
   crystalForceField: {fileID: 4647103244599679235, guid: b8ed9a8f80278304e80187917d6c4770,
