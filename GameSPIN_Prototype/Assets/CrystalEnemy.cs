@@ -38,6 +38,9 @@ public class CrystalEnemy : MonoBehaviour
 	}
 	
 	void moveToUntargetedPlayer(){
+		if(targetPlayer == null){
+			Destroy(gameObject);
+		}
 		if(speed != 0){				
 			var targetPoint = targetPlayer.transform.position;
 			var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);

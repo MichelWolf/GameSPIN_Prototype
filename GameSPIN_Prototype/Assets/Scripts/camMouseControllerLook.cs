@@ -8,7 +8,7 @@ public class camMouseControllerLook : MonoBehaviour {
 	Vector2 smoothV;
 
 	public float sensitivity = 5.0f;
-	public float smoothing = 2.0f;
+	public float smoothing = 5.0f;
 	public bool mouse = true ;
 
 	GameObject character;
@@ -26,7 +26,7 @@ public class camMouseControllerLook : MonoBehaviour {
 			md = new Vector2(Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivity, Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivity);} else{
 				md = InputManager.CameraJoystick();			
 }
-			md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
+			md = Vector2.Scale(md, new Vector2(sensitivity * Time.deltaTime * 20f, sensitivity * Time.deltaTime * 20f));
 			smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
 			smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
 			mouseLook += smoothV;

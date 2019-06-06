@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - EnemySmall
   - ExplodingCrystal
+  - Crystal
   layers:
   - Default
   - TransparentFX
@@ -42,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: New Layer
+    uniqueID: 3878704305
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

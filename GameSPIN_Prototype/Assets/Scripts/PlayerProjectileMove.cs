@@ -50,6 +50,10 @@ public class PlayerProjectileMove : MonoBehaviour
             Instantiate(crystalForceField, transform.position, transform.rotation);
             col.gameObject.GetComponent<CrystalExplosion>();
         }
+        else if(col.gameObject.tag == "Crystal")
+        {
+            col.gameObject.GetComponent<CrystalAlertGolem>().alert();
+        }
 	}
 	
 	public void isOutOfRange(){

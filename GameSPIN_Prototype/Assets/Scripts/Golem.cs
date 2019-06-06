@@ -24,6 +24,8 @@ public class Golem : MonoBehaviour
 	private float speed = 0;
 	private GameObject instantiatedProj;
 	private float attackpause=4f;
+
+    private bool state;
 	
 	private CameraShake[] cams;
 	
@@ -38,13 +40,14 @@ public class Golem : MonoBehaviour
 		speed += effectToSpawn.GetComponent<GolemProjectileMove>().speed;
 		cams = FindObjectsOfType<CameraShake>();
 		secondTarget = players[0];
+        state = false;
     }
 	
 
 	
     void Update()
     {
-		if(currentHitpoints > 0){
+		if(currentHitpoints > 0 && state){
         if(!paused && target != null){
 			StartCoroutine(attack());			
 		}		
@@ -101,20 +104,20 @@ public class Golem : MonoBehaviour
 		}
 		if(target != null){
 		 var targetPoint = target.transform.position;
-		var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
-		targetRot = targetRotation;
-		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
+	     var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
+		 targetRot = targetRotation;
+		 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
 		}
 	}
 	
 	public void fireVFX(){
 		if(target!=null){
-		instantiatedProj.GetComponent<GolemProjectileMove>().dot = false;
-		var targetPoint = target.transform.position;
-		var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
-		instantiatedProj.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 0.1f);
-		instantiatedProj.GetComponent<GolemProjectileMove>().speed += speed;
+			instantiatedProj.GetComponent<GolemProjectileMove>().dot = false;
+			var targetPoint = target.transform.position;
+			var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
+			instantiatedProj.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 0.1f);	
 		}
+		instantiatedProj.GetComponent<GolemProjectileMove>().speed += speed;
 	}
 	
 		void SpawnVFX(){
@@ -158,4 +161,20 @@ public class Golem : MonoBehaviour
 	public void refreshTargetList(){
 		players = GameObject.FindGameObjectsWithTag("Player");
 	}
+
+    public void standUp()
+    {
+        anim.SetTrigger("standUp");
+    }
+
+    public void setActive()
+    {
+        state = true;
+    }
+
+    public void setPassive()
+    {
+        state = false;
+    }
+
 }
