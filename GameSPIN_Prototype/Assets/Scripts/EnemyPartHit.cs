@@ -23,7 +23,7 @@ public class EnemyPartHit : MonoBehaviour
 	
 	
 	public void attack(){
-        if(active)
+        if(active && golem.state == true)
         { 
 		    golem.receiveDamage(damagePerHit);
 		    damageCapacity -= damagePerHit;
@@ -32,7 +32,7 @@ public class EnemyPartHit : MonoBehaviour
 			    detachableObject.SetActive(true);
 			    this.gameObject.SetActive(false);
 		    }
-            else if (damageCapacity < 0)
+            else if (damageCapacity <= 0)
             {
                 active = false;
                 this.GetComponent<SkinnedMeshRenderer>().material.DisableKeyword("_EMISSION");

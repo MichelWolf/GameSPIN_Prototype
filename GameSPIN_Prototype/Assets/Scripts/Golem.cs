@@ -27,7 +27,7 @@ public class Golem : MonoBehaviour
 	private GameObject instantiatedProj;
 	private float attackpause=4f;
 
-    private bool state;
+    internal bool state;
 	
 	private CameraShake[] cams;
 
@@ -36,6 +36,9 @@ public class Golem : MonoBehaviour
   
 
     public AudioSource audioSource;
+
+    bool dying = false;
+    bool fullyDissolved = false;
 
     void Start()
     {
@@ -68,6 +71,11 @@ public class Golem : MonoBehaviour
 		}		
 				findClosestTarget();
 		}
+
+        if  (fullyDissolved)
+        {
+            Destroy(this.gameObject);
+        }
     }
 	
 	bool playerInRange(){
@@ -105,6 +113,10 @@ public class Golem : MonoBehaviour
         {
             currentHitpoints = currentHitpoints - damage;
             healthBar.UpdateBar(currentHitpoints, hitpoints);
+            if(currentHitpoints <= 0)
+            {
+                StartCoroutine(DissolveGolem());
+            }
         }
 	}
 	
@@ -130,6 +142,9 @@ public class Golem : MonoBehaviour
 	}
 	
 	public void fireVFX(){
+        if(!dying)
+        {
+
 		if(target!=null){
 			instantiatedProj.GetComponent<GolemProjectileMove>().dot = false;
 			var targetPoint = target.transform.position;
@@ -137,9 +152,13 @@ public class Golem : MonoBehaviour
 			instantiatedProj.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 0.1f);	
 		}
 		instantiatedProj.GetComponent<GolemProjectileMove>().speed += speed;
+        }
 	}
 	
 		void SpawnVFX(){
+        if (!dying)
+        {
+
 		if(target!=null){
 		GameObject vfx;
 		if(firePoint != null){
@@ -162,19 +181,27 @@ public class Golem : MonoBehaviour
 			Debug.Log("No Fire Point");
 		}
 		}
+        }
 	}
 	
 	public void spawnVFXPlayer(){
+        if(!dying)
+        {
 		GameObject vfx;
 		vfx = Instantiate(effectToSpawn, new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z), target.transform.rotation);
 		vfx.GetComponent<GolemProjectileMove>().speed = 0;
 		instantiatedProj = vfx;
+        }
 	}
 	
 	public void shakeCamera(){
+        if (!dying)
+        {
+
 		foreach(CameraShake cam in cams){
 			cam.ShakeCamera(1f, 1f);
 		}
+        }
 	}
 	
 	public void refreshTargetList(){
@@ -204,4 +231,26 @@ public class Golem : MonoBehaviour
         explodingCrystals[random].SetActive(true);
     }
 
+    internal IEnumerator DissolveGolem()
+    {
+        dying = true;
+        fullyDissolved = false;
+        SkinnedMeshRenderer[] smr = GetComponentsInChildren<SkinnedMeshRenderer>();
+        float x = 0;
+        while(!fullyDissolved)
+        {
+            foreach(SkinnedMeshRenderer s in smr)
+            {
+                s.material.SetFloat("_Cutoff", x);
+            }
+            x += 0.05f;
+            yield return new WaitForSeconds(0.16f);
+            if (x > 1 )
+            {
+                fullyDissolved = true; ;
+            }
+        }
+        yield return null;
+
+    }
 }
