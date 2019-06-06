@@ -14,9 +14,10 @@ public class Golem : MonoBehaviour
 	private GameObject secondTarget;
 	private float aggroRange;
 	private Animator anim;
-    internal GameObject[] crystals;
-	
-	[Header("AttackProj")]
+    internal GameObject[] ownCrystals;
+    internal GameObject[] explodingCrystals;
+
+    [Header("AttackProj")]
 	public GameObject firePoint;
 	public List<GameObject> vfx = new List<GameObject>();
 	public GameObject crystalEnemy;
@@ -41,7 +42,12 @@ public class Golem : MonoBehaviour
 		speed += effectToSpawn.GetComponent<GolemProjectileMove>().speed;
 		cams = FindObjectsOfType<CameraShake>();
 		secondTarget = players[0];
-        crystals = GameObject.FindGameObjectsWithTag("EnemyCrystal");
+        ownCrystals = GameObject.FindGameObjectsWithTag("EnemyCrystal");
+        explodingCrystals = GameObject.FindGameObjectsWithTag("ExplodingCrystal");
+        foreach(GameObject g in explodingCrystals)
+        {
+            g.SetActive(false);
+        }
         state = false;
     }
 	
@@ -180,6 +186,12 @@ public class Golem : MonoBehaviour
     public void setPassive()
     {
         state = false;
+    }
+
+    public void ActivateNewExplodingCrystal()
+    {
+        int random = Random.Range(0, explodingCrystals.Length - 1);
+        explodingCrystals[random].SetActive(true);
     }
 
 }

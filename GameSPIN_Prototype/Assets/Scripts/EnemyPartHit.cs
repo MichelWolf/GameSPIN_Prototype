@@ -9,8 +9,10 @@ public class EnemyPartHit : MonoBehaviour
 	public float damagePerHit=5;
 	
 	public float damageCapacity=20;
+    internal float maxCapacity = 20;
 	public bool detachable=false;
 	public GameObject detachableObject;
+    public bool active = false;
 	
 	public Golem golem;
 
@@ -21,13 +23,23 @@ public class EnemyPartHit : MonoBehaviour
 	
 	
 	public void attack(){
-		golem.receiveDamage(damagePerHit);
-		damageCapacity -= damagePerHit;
-		if(detachable && damageCapacity < 0){
-		//	Destroy(gameObject.GetComponent("SkinnedMeshRenderer"));
-			detachableObject.SetActive(true);
-			this.gameObject.SetActive(false);
-		}
+        if(active)
+        { 
+		    golem.receiveDamage(damagePerHit);
+		    damageCapacity -= damagePerHit;
+		    if(detachable && damageCapacity < 0){
+		    //	Destroy(gameObject.GetComponent("SkinnedMeshRenderer"));
+			    detachableObject.SetActive(true);
+			    this.gameObject.SetActive(false);
+		    }
+            else if (damageCapacity < 0)
+            {
+                active = false;
+                this.GetComponent<SkinnedMeshRenderer>().material.DisableKeyword("_EMISSION");
+                damageCapacity = maxCapacity;
+                golem.ActivateNewExplodingCrystal();
+            }
+        }
 	}
 
 	

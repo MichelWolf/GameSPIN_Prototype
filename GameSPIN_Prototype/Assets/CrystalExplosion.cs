@@ -7,7 +7,10 @@ public class CrystalExplosion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindObjectOfType<Golem>().crystals[Random.Range(0, FindObjectOfType<Golem>().crystals.Length)].GetComponent<SkinnedMeshRenderer>().material.EnableKeyword("_EMISSION");
+        //int random = Random.Range(0, FindObjectOfType<Golem>().ownCrystals.Length);
+        int random = 0;
+        FindObjectOfType<Golem>().ownCrystals[random].GetComponent<SkinnedMeshRenderer>().material.EnableKeyword("_EMISSION");
+        FindObjectOfType<Golem>().ownCrystals[random].GetComponent<EnemyPartHit>().active = true;
         Destroy(this.gameObject, this.gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length);
     }
 

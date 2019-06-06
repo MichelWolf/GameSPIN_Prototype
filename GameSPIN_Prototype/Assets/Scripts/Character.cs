@@ -167,6 +167,7 @@ public class Character : MonoBehaviour
 
 		}
 		verticalVelocity -= gravity * Time.deltaTime;
+        verticalVelocity = Mathf.Clamp(verticalVelocity, -5, 50);
 		if (!isGrounded)
 		{
 			falling = true;
