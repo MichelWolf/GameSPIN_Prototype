@@ -27,6 +27,8 @@ public class Headbobber: MonoBehaviour
     public AudioClip[] footsteps;
     public AudioSource audioSource;
 
+    private float changeSpeed = 250;
+
 	Vector3 bobs;// = transform.localPosition;
 
 	Character player;
@@ -69,6 +71,8 @@ public class Headbobber: MonoBehaviour
 						timer = timer + crouchBobbingSpeed;
 					}
 
+
+
 					if (timer > Mathf.PI * 2) {
 						timer = timer - (Mathf.PI * 2);
 					}
@@ -86,7 +90,8 @@ public class Headbobber: MonoBehaviour
 						translateChange = waveslice * crouchBobbingAmount;
 					}
 
-					float totalAxes = Mathf.Abs (input.x) + Mathf.Abs (input.z);
+
+                    float totalAxes = Mathf.Abs (input.x) + Mathf.Abs (input.z);
 					totalAxes = Mathf.Clamp (totalAxes, 0.0f, 1.0f);
 					translateChange = totalAxes * translateChange;
 					bobs.y = midpoint + translateChange;
@@ -118,7 +123,7 @@ public class Headbobber: MonoBehaviour
             {
                 if (parentPos.y < standHeight)
                 {
-                    parentPos.y += 0.05f;
+                    parentPos.y += 0.05f * Time.deltaTime * changeSpeed * (standHeight - parentPos.y);
                 }
                 parentPos.y = Mathf.Clamp(parentPos.y, 0, standHeight);
             }
@@ -126,7 +131,7 @@ public class Headbobber: MonoBehaviour
             {
                 if (parentPos.y > crouchHeight)
                 {
-                    parentPos.y -= 0.05f;
+                    parentPos.y -= 0.05f * Time.deltaTime * changeSpeed * (parentPos.y - crouchHeight); 
                 }
                 parentPos.y = Mathf.Clamp(parentPos.y, crouchHeight, Mathf.Infinity);
             }
@@ -136,5 +141,4 @@ public class Headbobber: MonoBehaviour
         }
 
     }
-
 }

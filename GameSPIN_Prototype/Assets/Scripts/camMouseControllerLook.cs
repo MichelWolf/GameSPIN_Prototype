@@ -8,7 +8,7 @@ public class camMouseControllerLook : MonoBehaviour {
 	Vector2 smoothV;
 
 	public float sensitivity = 5.0f;
-	public float smoothing = 2.0f;
+	public float smoothing = 5.0f;
 	public bool mouse = true ;
     private InputManagerIF inputManager;
 

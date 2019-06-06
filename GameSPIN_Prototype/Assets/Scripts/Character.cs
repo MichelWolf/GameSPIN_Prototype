@@ -97,6 +97,8 @@ public class Character : MonoBehaviour
     public GameObject teleportParticleEnd;
     public float dashCooldown;
     private float timeSinceDashed;
+
+    private float moveV, moveH;
     PostProcessingProfile ppp;
     ChromaticAberrationModel.Settings chromAbbSettings;
 
@@ -136,7 +138,9 @@ public class Character : MonoBehaviour
         ui_man = FindObjectOfType<UI_Manager>();
         timeSinceDashed = dashCooldown;
         ppp = GetComponentInChildren<PostProcessingBehaviour>().profile;
-		//SendHPToUIMan();
+        //animDummy.SetFloat("AnimSpeed", 1f);
+        //anim.SetFloat("AnimSpeed", 1f);
+        //SendHPToUIMan();
     }
 
 	void Update()
@@ -226,10 +230,21 @@ public class Character : MonoBehaviour
         {			
         }
         #endregion Gegner angucken
-		
-	if(inputManager.AttackButton()){
-				anim.SetTrigger("Attack");
-				animDummy.SetTrigger("Attack");
+
+        moveH = inputManager.MainHorizontal();
+        moveV = inputManager.MainVertical();
+
+        anim.SetFloat("VelX", moveH, 1f, Time.deltaTime * 10f);
+        anim.SetFloat("VelY", moveV, 1f, Time.deltaTime * 10f);
+
+        animDummy.SetFloat("VelX", moveH, 1f, Time.deltaTime * 10f);
+        animDummy.SetFloat("VelY", moveV, 1f, Time.deltaTime * 10f);
+      
+
+
+        if (inputManager.AttackButton()){
+				anim.SetTrigger("AttackRight");
+				animDummy.SetTrigger("AttackRight");
 			}
 
         //Movement ganz am Ende
@@ -258,36 +273,6 @@ public class Character : MonoBehaviour
 			falling = false;
 		}
 
-       
-
-        
-        if (walkingMode == WalkingMode.walking)
-        {
-            if (moveDirection.x == 0 && moveDirection.z == 0)
-            {
-                anim.SetTrigger("Idle");
-				animDummy.SetTrigger("Idle");
-            }
-            else
-            {
-				anim.SetTrigger("Walk");
-				animDummy.SetTrigger("Walk");
-            }
-        }
-        else if (walkingMode == WalkingMode.running)
-        {
-				anim.SetTrigger("Run");
-				animDummy.SetTrigger("Run");
-        }
-        else if (walkingMode == WalkingMode.crouching)
-        {
-            if (moveDirection.x == 0 && moveDirection.z == 0)
-            {
-            }
-            else
-            {
-            }
-        }
 
         if (inputManager.DashButtonDown() && timeSinceDashed > dashCooldown)
         {
@@ -343,13 +328,15 @@ public class Character : MonoBehaviour
 			if (walkingMode == WalkingMode.running)
 			{
 				SwitchWalkingMode(WalkingMode.walking);
-			}
+            }
 			else
 			{
 				if (isGrounded) 
 				{
 					SwitchWalkingMode(WalkingMode.running);
-				}
+                    animDummy.SetTrigger("Run");
+                    anim.SetTrigger("Run");
+                }
 			}
 			return;
 		}
@@ -359,10 +346,11 @@ public class Character : MonoBehaviour
 			if (walkingMode == WalkingMode.crouching)
 			{
 				//Testen ob Spieler aufstehen kann
-				if (DoesPlayerFit())
+				if (true)
 				{
 					SwitchWalkingMode(WalkingMode.walking);
-				}
+                  //  animDummy.SetTrigger("Walk");
+                }
 				else
 				{
 					return;
@@ -370,14 +358,14 @@ public class Character : MonoBehaviour
 			}
 			else
 			{
-				SwitchWalkingMode(WalkingMode.crouching);
-			}
+				SwitchWalkingMode(WalkingMode.crouching);             
+            }
 			return;
 		}
 		if ((inputManager.MainJoystick ().x == 0) && (inputManager.MainJoystick ().z == 0) && walkingMode != WalkingMode.crouching)
 		{
-			SwitchWalkingMode(WalkingMode.walking);
-		}
+            SwitchWalkingMode(WalkingMode.walking);          
+        }
 	}
 
 	void SwitchWalkingMode(WalkingMode newMode)
@@ -389,12 +377,25 @@ public class Character : MonoBehaviour
         {
             charContr.height = standHeight;
             charContr.center = new Vector3(0f, standHeight / 2, 0f);
+            if(newMode == WalkingMode.walking)
+            {
+                animDummy.SetTrigger("Walk");
+                anim.SetTrigger("Walk");
+            }
+            else
+            {
+                animDummy.SetTrigger("Run");
+                anim.SetTrigger("Run");
+            }
         }
         else if (newMode == WalkingMode.crouching)
         {
             charContr.height = crouchHeight;
             charContr.center = new Vector3(0f, crouchHeight / 2, 0f);
+            animDummy.SetTrigger("Crouch");
+            anim.SetTrigger("Crouch");
         }
+ 
     }
 
 	public void HandleCurrentObjectLookedAt()
