@@ -322,7 +322,6 @@ public class Character : MonoBehaviour
 			if (walkingMode == WalkingMode.running)
 			{
 				SwitchWalkingMode(WalkingMode.walking);
-                animDummy.SetTrigger("Walk");
             }
 			else
 			{
@@ -330,6 +329,7 @@ public class Character : MonoBehaviour
 				{
 					SwitchWalkingMode(WalkingMode.running);
                     animDummy.SetTrigger("Run");
+                    anim.SetTrigger("Run");
                 }
 			}
 			return;
@@ -374,10 +374,12 @@ public class Character : MonoBehaviour
             if(newMode == WalkingMode.walking)
             {
                 animDummy.SetTrigger("Walk");
+                anim.SetTrigger("Walk");
             }
             else
             {
                 animDummy.SetTrigger("Run");
+                anim.SetTrigger("Run");
             }
         }
         else if (newMode == WalkingMode.crouching)
@@ -385,6 +387,7 @@ public class Character : MonoBehaviour
             charContr.height = crouchHeight;
             charContr.center = new Vector3(0f, crouchHeight / 2, 0f);
             animDummy.SetTrigger("Crouch");
+            anim.SetTrigger("Crouch");
         }
  
     }
