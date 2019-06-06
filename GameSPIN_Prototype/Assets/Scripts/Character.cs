@@ -59,9 +59,11 @@ public class Character : MonoBehaviour
 
 	Gravity grav;
     public AudioClip landingSound;
+    public AudioClip attack;
     public AudioSource audioSource;
-	//Image fadenkreuzImage;
-	camMouseLook mouseLook;
+    public AudioClip dashSound;
+    //Image fadenkreuzImage;
+    camMouseLook mouseLook;
 
     public Material normalEnemy;
     public Material lockedEnemy;
@@ -110,7 +112,7 @@ public class Character : MonoBehaviour
 
     void Start()
 	{
-		if(!mouse){
+        if (!mouse){
 			inputManager = new InputManagerController();
 			hitBy2ndPlayer = 1;
 			hitStatus = 2;
@@ -282,6 +284,7 @@ public class Character : MonoBehaviour
         if (inputManager.DashButtonDown() && timeSinceDashed > dashCooldown)
         {
             Instantiate(teleportParticleStart, this.gameObject.transform.GetChild(0).transform.position, this.gameObject.transform.GetChild(0).transform.rotation);
+            audioSource.PlayOneShot(dashSound, 0.15f);
             charContr.Move(moveDirection * Time.deltaTime * 50f);
             Instantiate(teleportParticleEnd, this.gameObject.transform.GetChild(0).transform.position, this.gameObject.transform.GetChild(0).transform.rotation);
             timeSinceDashed = 0f;
@@ -580,7 +583,8 @@ public class Character : MonoBehaviour
 			vfx = Instantiate(effectToSpawn, firePoint[i].transform.position, camera.transform.rotation);
 			Instantiate(effectToSpawnStart, firePoint[i].transform.position, camera.transform.rotation);
 			vfx.GetComponent<PlayerProjectileMove>().setUiScript(uiForPlayer.GetComponent<UiScript>());
-		} else {
+            audioSource.PlayOneShot(attack, 0.15f);
+        } else {
 			Debug.Log("No Fire Point");
 		}
 			//StartCoroutine(coolDown(.5f));
