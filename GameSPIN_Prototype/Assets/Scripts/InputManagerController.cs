@@ -65,11 +65,15 @@ public class InputManagerController : InputManagerIF
 	{
 		return Input.GetButtonDown("DashJ");
 	}
-	public bool AttackButton()
+	public bool AttackButtonLeft()
 	{
-		return Input.GetButtonDown("AttackJ");
+		return Input.GetButtonDown("AttackJL");
 	}
-	public bool RunButtonDown()
+    public bool AttackButtonRight()
+    {
+        return Input.GetButtonDown("AttackJ_R");
+    }
+    public bool RunButtonDown()
 	{
 		return Input.GetButtonDown ("RunJ");
 	}

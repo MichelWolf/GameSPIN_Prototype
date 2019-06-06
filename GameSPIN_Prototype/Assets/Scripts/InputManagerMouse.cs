@@ -65,11 +65,17 @@ public class InputManagerMouse : InputManagerIF
 	{
 		return Input.GetButtonDown("Dash");
 	}
-	public bool AttackButton()
+	public bool AttackButtonLeft()
 	{
-		return Input.GetButtonDown("Attack");
+		return Input.GetButtonDown("Attack_L");
 	}
-	public bool RunButtonDown()
+
+    public bool AttackButtonRight()
+    {
+        return Input.GetButtonDown("Attack_R");
+    }
+
+    public bool RunButtonDown()
 	{
 		return Input.GetButtonDown ("Run");
 	}

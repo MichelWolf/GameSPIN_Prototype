@@ -18,8 +18,9 @@ interface InputManagerIF
 	bool InteractButton();
 	bool InteractButtonDown();
 	bool DashButtonDown();
-	bool AttackButton();
-	bool RunButtonDown();
+	bool AttackButtonRight();
+    bool AttackButtonLeft();
+    bool RunButtonDown();
 	bool TeleportButton();
 	bool TeleportButtonDown();
 	bool PauseButton();

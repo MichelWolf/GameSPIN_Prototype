@@ -78,8 +78,8 @@ public class Character : MonoBehaviour
 	public Color playercolor;
 	
 	[Header("AttackProj")]
-	public GameObject firePoint;
-	public GameObject[] vfx;
+	public GameObject[] firePoint;
+    public GameObject[] vfx;
 	
 	public GameObject uiForPlayer;
 	
@@ -242,10 +242,15 @@ public class Character : MonoBehaviour
       
 
 
-        if (inputManager.AttackButton()){
+        if (inputManager.AttackButtonRight()){
 				anim.SetTrigger("AttackRight");
 				animDummy.SetTrigger("AttackRight");
-			}
+        }
+        if (inputManager.AttackButtonLeft())
+        {
+            anim.SetTrigger("AttackLeft");
+            animDummy.SetTrigger("AttackLeft");
+        }
 
         //Movement ganz am Ende
 
@@ -567,13 +572,13 @@ public class Character : MonoBehaviour
 		//ppp.vignette.settings = pppSettings;
 	}
 	
-	void SpawnVFX(){
+	void SpawnVFX(int i){
 		//if(!cooldown){
 		//	cooldown=true;
 		GameObject vfx;
-		if(firePoint != null){
-			vfx = Instantiate(effectToSpawn, firePoint.transform.position, camera.transform.rotation);
-			Instantiate(effectToSpawnStart, firePoint.transform.position, camera.transform.rotation);
+		if(firePoint[i] != null){
+			vfx = Instantiate(effectToSpawn, firePoint[i].transform.position, camera.transform.rotation);
+			Instantiate(effectToSpawnStart, firePoint[i].transform.position, camera.transform.rotation);
 			vfx.GetComponent<PlayerProjectileMove>().setUiScript(uiForPlayer.GetComponent<UiScript>());
 		} else {
 			Debug.Log("No Fire Point");
@@ -583,12 +588,12 @@ public class Character : MonoBehaviour
 		
 	}
 	
-	void SpawnVFXImplosion(){
+	void SpawnVFXImplosion(int i){
 		//if(!cooldown){
 		//	cooldown=true;
 		GameObject vfx;
-		if(firePoint != null){			
-			Instantiate(effectToSpawnImplosion, firePoint.transform.position, camera.transform.rotation);
+		if(firePoint[i] != null){			
+			Instantiate(effectToSpawnImplosion, firePoint[i].transform.position, camera.transform.rotation);
 		} else {
 			Debug.Log("No Fire Point");
 		}

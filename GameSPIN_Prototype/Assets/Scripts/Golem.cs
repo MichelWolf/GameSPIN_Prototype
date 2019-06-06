@@ -5,7 +5,7 @@ using UnityEngine;
 public class Golem : MonoBehaviour
 {
     // Start is called before the first frame update
-	public float hitpoints = 100;
+	public float hitpoints = 200;
 	private float currentHitpoints;
 	private bool paused;
     public SimpleHealthBar healthBar;
@@ -87,8 +87,11 @@ public class Golem : MonoBehaviour
 	}
 	
 	public void receiveDamage(float damage){
-		currentHitpoints = currentHitpoints - damage;
-		healthBar.UpdateBar( currentHitpoints, hitpoints );
+        if (state != false)
+        {
+            currentHitpoints = currentHitpoints - damage;
+            healthBar.UpdateBar(currentHitpoints, hitpoints);
+        }
 	}
 	
 	public void findClosestTarget(){
