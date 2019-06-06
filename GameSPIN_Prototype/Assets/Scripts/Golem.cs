@@ -30,10 +30,17 @@ public class Golem : MonoBehaviour
     private bool state;
 	
 	private CameraShake[] cams;
-	
+
+    public AudioClip ambient;
+    public AudioClip[] attackSound;
+  
+
+    public AudioSource audioSource;
+
     void Start()
     {
-		aggroRange = 20f;
+      //  audioSource.PlayOneShot(ambient, 0.1f);
+        aggroRange = 20f;
 		currentHitpoints = hitpoints;
         healthBar.UpdateBar( hitpoints, hitpoints );
 		players = GameObject.FindGameObjectsWithTag("Player");
@@ -79,9 +86,10 @@ public class Golem : MonoBehaviour
 		GameObject crystal;
 		crystal = Instantiate(crystalEnemy,transform.position,transform.rotation);
 		crystal.GetComponent<CrystalEnemy>().setTargetPlayer(secondTarget);
-		anim.SetTrigger("atk"+randomNumber);	
-		//SpawnVFX();
-		if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1") || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack2")){
+		anim.SetTrigger("atk"+randomNumber);
+        audioSource.PlayOneShot(attackSound[randomNumber-1], 1f);
+        //SpawnVFX();
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack1") || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack2")){
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length+anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
 		}else{
 			yield return new WaitForSeconds(2f);
@@ -175,7 +183,9 @@ public class Golem : MonoBehaviour
 
     public void standUp()
     {
-        anim.SetTrigger("standUp");
+        audioSource.PlayOneShot(attackSound[1], 1f);
+
+       anim.SetTrigger("standUp");
     }
 
     public void setActive()
