@@ -25506,6 +25506,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitpoints: 150
   healthBar: {fileID: 1343892581}
+  ownCrystals:
+  - {fileID: 2863553232209105492}
+  - {fileID: 634201829931231434}
+  - {fileID: 562714735098985063}
+  - {fileID: 2156047514033389253}
+  - {fileID: 6860779605335589104}
+  - {fileID: 7001811726361374982}
+  - {fileID: 4753541945779473673}
+  - {fileID: 4361611584215674426}
   firePoint: {fileID: 917402477}
   vfx:
   - {fileID: 5370788868380053442, guid: f9323c3c9d341fd4a8e6401b4254b6d5, type: 3}
