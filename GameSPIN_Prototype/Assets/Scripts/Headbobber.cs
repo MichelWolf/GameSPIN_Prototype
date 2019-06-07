@@ -64,11 +64,11 @@ public class Headbobber: MonoBehaviour
 				} else {
 
 					if (player.walkingMode == Character.WalkingMode.walking) {
-						timer = timer + walkBobbingSpeed;
+						timer = timer + walkBobbingSpeed * Time.deltaTime * 125f;
 					} else if (player.walkingMode == Character.WalkingMode.running) {
-						timer = timer + runBobbingSpeed;
+						timer = timer + runBobbingSpeed * Time.deltaTime * 125f;
 					} else if (player.walkingMode == Character.WalkingMode.crouching) {
-						timer = timer + crouchBobbingSpeed;
+						timer = timer + crouchBobbingSpeed * Time.deltaTime * 125f;
 					}
 
 
