@@ -110,6 +110,8 @@ public class Character : MonoBehaviour
     internal float lastInputX = 0;
     internal float lastInputZ = 0;
 
+    private bool pushed = false;
+
     void Start()
 	{
         if (!mouse){
@@ -294,7 +296,10 @@ public class Character : MonoBehaviour
         }
         else
         {
-            charContr.Move(moveDirection * Time.deltaTime);
+            if (pushed != true)
+            {
+                charContr.Move(moveDirection * Time.deltaTime);
+            }
         }
         
         if(timeSinceDashed <= dashCooldown)
@@ -311,8 +316,10 @@ public class Character : MonoBehaviour
                 ui_man.UpdateTPCD(1, timeSinceDashed / dashCooldown);
             }
         }
-			
-		charContr.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
+
+       
+            charContr.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
+        
 		
 		lastVerticalVelocity = verticalVelocity;
 	}
@@ -611,5 +618,33 @@ public class Character : MonoBehaviour
     {
         yield return new WaitForSeconds(sec);
 		cooldown = false;
+    }
+    public void initiatePush(float speed, float distance, Vector3 pushDir)
+    {
+        StartCoroutine(pushBack(speed, distance, pushDir));
+    }
+
+    public IEnumerator pushBack(float speed, float distance, Vector3 pushDir)
+    {
+        int stuckCtr = 0;
+        Vector3 startPos = charContr.transform.position;
+        Vector3 stuckV=startPos;
+        pushed = true;
+        while (Vector3.Distance(startPos, charContr.transform.position) < distance)
+        {      
+            if (Vector3.Distance(stuckV, charContr.transform.position) < 0.1f)
+            {
+                stuckCtr++;
+            }
+            stuckV = charContr.transform.position;
+            if(stuckCtr > 2)
+            {
+                pushed = false;
+                yield break;
+            }
+            charContr.Move(pushDir * Time.deltaTime * speed * (distance - (Vector3.Distance(startPos, charContr.transform.position))));
+            yield return new WaitForFixedUpdate();
+        }
+        pushed = false;
     }
 }

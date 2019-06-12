@@ -137,7 +137,7 @@ public class Golem : MonoBehaviour
 		 var targetPoint = target.transform.position;
 	     var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
 		 targetRot = targetRotation;
-		 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
+		 //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
 		}
 	}
 	
@@ -146,12 +146,12 @@ public class Golem : MonoBehaviour
         {
 
 		if(target!=null){
-			instantiatedProj.GetComponent<GolemProjectileMove>().dot = false;
+			//instantiatedProj.GetComponent<GolemProjectileMove>().dot = false;
 			var targetPoint = target.transform.position;
 			var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
 			instantiatedProj.transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 0.1f);	
 		}
-		instantiatedProj.GetComponent<GolemProjectileMove>().speed += speed;
+		instantiatedProj.GetComponent<GolemProjectileMove>().fireVfxWithSpeed(speed);
         }
 	}
 	
@@ -229,6 +229,7 @@ public class Golem : MonoBehaviour
     {
         int random = Random.Range(0, explodingCrystals.Length - 1);
         explodingCrystals[random].SetActive(true);
+        explodingCrystals[random].GetComponent<ParticleTrail>().activateParticleTrail();
     }
 
     internal IEnumerator DissolveGolem()
@@ -252,5 +253,14 @@ public class Golem : MonoBehaviour
         }
         yield return null;
 
+    }
+
+    public void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Player")
+        {
+            Debug.Log("Player entered");
+            col.gameObject.GetComponent<Character>().initiatePush(3f, 10f, col.gameObject.transform.position - transform.position);
+        }
     }
 }

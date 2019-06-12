@@ -33,11 +33,22 @@ public class CrystalEnemy : MonoBehaviour
 		if(col.gameObject.tag == "Player")
 		{
 			col.gameObject.GetComponent<Character>().TakeDamage(damageToPlayer);
-			Destroy(gameObject);
+            col.gameObject.GetComponent<Character>().initiatePush(5f, 20f, col.gameObject.transform.position - transform.position);
+            Destroy(gameObject);
 		}
 	}
-	
-	void moveToUntargetedPlayer(){
+
+    void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            col.gameObject.GetComponent<Character>().TakeDamage(damageToPlayer);
+           // col.gameObject.GetComponent<Character>().initiatePush(3f, 10f, col.gameObject.transform.position - transform.position);
+            Destroy(gameObject);
+        }
+    }
+
+    void moveToUntargetedPlayer(){
 		if(targetPlayer == null){
 			Destroy(gameObject);
 		}

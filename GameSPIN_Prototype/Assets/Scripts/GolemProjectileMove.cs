@@ -17,6 +17,8 @@ public class GolemProjectileMove : MonoBehaviour
 	
 	private Vector3 startPos = new Vector3(0,0,0);
 	private bool waiting=false;
+    private bool colDeactivate=true;
+
     void Start()
     {
 		startPos +=transform.position;         
@@ -42,15 +44,22 @@ public class GolemProjectileMove : MonoBehaviour
 		{
 			if(!dot){
 				col.gameObject.GetComponent<Character>().TakeDamage(spellDamageImpact);
-				Destroy(gameObject);
+                col.gameObject.GetComponent<Character>().initiatePush(5f, 20f, transform.forward);
+                Destroy(gameObject);
 			} else {
 				col.gameObject.GetComponent<Character>().TakeDamage(dotDmg);
-			}
+            }
 		}
 
 	}
 	void OnTriggerStay(Collider col){
 		if(!waiting && col.gameObject.tag == "Player") {
+            if(speed != 0 && colDeactivate && dot)
+            {
+                gameObject.GetComponent<Collider>().enabled = false;
+                colDeactivate = false;
+               // col.gameObject.GetComponent<Character>().initiatePush(1f, 15f, Vector3.up);
+            }
 		StartCoroutine(wait(.5f));
 			if(!dot){
 				col.gameObject.GetComponent<Character>().TakeDamage(spellDamageImpact);
@@ -70,4 +79,13 @@ public class GolemProjectileMove : MonoBehaviour
 		yield return new WaitForSeconds(timeSec);
 		waiting = false;
 	}
+
+    public void fireVfxWithSpeed(float speedF)
+    {
+        speed = speedF;
+        if (dot)
+        {
+           // col.gameObject.GetComponent<Character>().initiatePush(1f, 15f, Vector3.up);
+        }
+    }
 }
