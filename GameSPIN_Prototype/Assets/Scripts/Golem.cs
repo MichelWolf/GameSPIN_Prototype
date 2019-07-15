@@ -137,7 +137,7 @@ public class Golem : MonoBehaviour
 		 var targetPoint = target.transform.position;
 	     var targetRotation = Quaternion.LookRotation (targetPoint - transform.position, Vector3.up);
 		 targetRot = targetRotation;
-		 //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
+		 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2.0f);
 		}
 	}
 	
